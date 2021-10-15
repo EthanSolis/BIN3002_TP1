@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -42,18 +43,27 @@ public class Main {
 	public static void main(String args[]) throws FileNotFoundException{
 		//args: fasta location, assumed number of genes, no. training iterations, output name
 		ArrayList<String> chromos = parse(args[0]);
-		
 		String chromo = chromos.get(0);
 		int iter = Integer.parseInt(args[2]);
 		
 		Model model = new Model(chromo, Integer.parseInt(args[1]));
+		System.out.println(model.getP0());
+		System.out.println(model.getP1());
+		System.out.println(model.getTrans0());
+		System.out.println(model.getTrans1());
+
 		
 		int[] segments;
 		do {
 			segments = model.segmentation(chromo);
 			model.apprentissage(segments, chromo);
+		//	System.out.println(model.getP0());
+		//	System.out.println(model.getP1());
+			//System.out.println(model.getTrans0());
+			//System.out.println(model.getTrans1());
 			iter--;
 		}
+		
 		while(iter > 0);
 		segments = model.segmentation(chromo); //final segmentation
 		ArrayList<int[]> seqs = new ArrayList<>();

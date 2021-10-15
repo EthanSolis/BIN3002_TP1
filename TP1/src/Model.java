@@ -9,20 +9,39 @@ public class Model {
 
 	public Model (String chr, int genes) {
 		double[] p = new double[2];
-		int n = chr.length();
-		int count = 0;
+		double n = chr.length();
+		double count = 0;
 		for(int i=0; i<n; i++) {
 			if(chr.charAt(i)=='C' || chr.charAt(i)=='G') {
 				count++;
 			}
 		}
+
+		
 		p[0] = count/n;
+
 		p[1] = (p[0]+1)/2;
 
 		this.p0 = p[0]/2;
 		this.p1 = p[1]/2;
 		this.trans0 = genes/n;
 		this.trans1 = genes/(p[0]*n);
+	}
+	
+	public double getP0() {
+		return p0;
+	}
+
+	public double getP1() {
+		return p1;
+	}
+
+	public double getTrans0() {
+		return trans0;
+	}
+
+	public double getTrans1() {
+		return trans1;
 	}
 
 	//create segments meaning path of 0 and 1
@@ -40,6 +59,10 @@ public class Model {
 		//penalties
 		double penalty0 = Math.log((1-trans0)/trans1);
 		double penalty1 = Math.log((1-trans1)/trans0);
+
+
+		
+		
 	
 		v0[0] = 0;
 		for(int i = 0; i<g; i++) {
